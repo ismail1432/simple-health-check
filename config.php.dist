@@ -1,0 +1,4 @@
+<?php
+const SLACK_URL = 'See Webhook documentation https://api.slack.com/messaging/webhooks';
+
+const ENDPOINT_TO_CHECK = [];
