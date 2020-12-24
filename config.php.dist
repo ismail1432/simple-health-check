@@ -1,4 +1,30 @@
 <?php
-const SLACK_URL = 'See Webhook documentation https://api.slack.com/messaging/webhooks';
 
-const ENDPOINT_TO_CHECK = [];
+//!\\ Configuration file, you MUST edit it with you credentials or you strategy to retrieve data
+//!\\ These callables can be edited with your own logic to fetch parameters (environment variables, database...)
+
+const ENDPOINT_TO_CHECK = ['www.google.com', 'https://127.0.0.1:8000', 'web.application.docker'];
+
+const SLACK_CHANNEL = 'Channel Id';
+const SLACK_URL = 'https://slack.com/api/chat.postMessage'; // https://api.slack.com/messaging/sending
+const SLACK_TOKEN = 'Token';
+
+function getSlackUrl(): string
+{
+    return SLACK_URL;
+}
+
+function getEndPointToCheck(): array
+{
+    return ENDPOINT_TO_CHECK;
+}
+
+function getSlackToken(): string
+{
+    return SLACK_TOKEN;
+}
+
+function getSlackChannel(): string
+{
+    return SLACK_CHANNEL;
+}

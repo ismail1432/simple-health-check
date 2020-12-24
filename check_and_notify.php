@@ -1,19 +1,57 @@
 <?php
 
 require_once 'config.php';
-require_once 'utils.php';
 
-const ENDPOINT_TO_CHECK = [];
+function notifySlack(string $message): void
+{
+    $curl = curl_init();
+    curl_setopt_array(
+        $curl,
+        [
+        CURLOPT_URL => getSlackUrl(),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => json_encode([
+            'text' => ":x: $message",
+            'channel' => getSlackChannel()
+        ]),
+        CURLOPT_HTTPHEADER => [
+            sprintf('Authorization: Bearer %s', getSlackToken()),
+            "Content-type: application/json",
+        ]
+        ]
+    );
 
-foreach (ENDPOINT_TO_CHECK as $endpoint) {
+    curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+    if ($err) {
+        logError($err);
+    }
+}
+
+function isServerError($statusCode): bool
+{
+    return $statusCode >= 500 && $statusCode < 600;
+}
+
+function logError(string $content): void
+{
+    file_put_contents('log/log_'.date("j.n.Y").'.log', $content, FILE_APPEND);
+}
+
+foreach (getEndpointToCheck() as $endpoint) {
     $curlHandle = curl_init($endpoint);
-    curl_exec($curlHandle);
+    $response = curl_exec($curlHandle);
+    curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
 
-    if (curl_errno($curlHandle)) {
-        log($error = curl_error($curlHandle));
-        notifySlack([sprintf(':x: %', $endpoint) => sprintf("Unable to call %s, %s", $endpoint, $error)]);
+    if (curl_errno($curlHandle) || !$response) {
+        $message = sprintf("Unable to call %s, error: %s", $endpoint, curl_error($curlHandle));
+        logError($message);
+        notifySlack($message);
     } elseif (isServerError($statusCode = curl_getinfo($curlHandle, CURLINFO_HTTP_CODE))) {
-        notifySlack([sprintf(':x: %', $endpoint) => $statusCode]);
+        notifySlack(sprintf("%s seems down with status code %s", $endpoint, $statusCode));
     }
     curl_close($curlHandle);
 }
