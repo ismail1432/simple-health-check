@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Configuration file, you MUST edit it with you credentials or you strategy to retrieve data
+
+enpointToCheck=('https://127.0.0.1:8000' 'www.google.com');
+slackChannel='Channel Id'
+slackUrl='https://slack.com/api/chat.postMessage' # https://api.slack.com/messaging/sending
+slackToken='Token'
