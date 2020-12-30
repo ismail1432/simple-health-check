@@ -43,8 +43,8 @@ function logError(string $content): void
 
 foreach (getEndpointToCheck() as $endpoint) {
     $curlHandle = curl_init($endpoint);
-    $response = curl_exec($curlHandle);
     curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($curlHandle);
 
     if (curl_errno($curlHandle) || !$response) {
         $message = sprintf("Unable to call %s, error: %s", $endpoint, curl_error($curlHandle));
