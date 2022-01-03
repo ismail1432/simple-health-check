@@ -8,6 +8,11 @@
 
 ## You can use the PHP script or the Bash script.
 
+## Requirements
+
+- PHP >= 7.1
+- Bash is available.
+
 ### PHP
 
 Edit the `config.php.dist` with your parameters see [slack documentation](https://api.slack.com/messaging/sending)
@@ -26,3 +31,4 @@ Edit the `config.sh.dist` with your parameters see [slack documentation](https:/
 Run script (can be run with an interval via a CRON)
 
 ```bash path/to/directory/check_and_notif.sh > /dev/null```
+
