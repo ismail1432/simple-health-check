@@ -5,9 +5,18 @@
 
 const ENDPOINT_TO_CHECK = ['www.google.com', 'https://127.0.0.1:8000', 'web.application.docker'];
 
+const SLACK_ACTIVE = false;
 const SLACK_CHANNEL = 'Channel Id';
 const SLACK_URL = 'https://slack.com/api/chat.postMessage'; // https://api.slack.com/messaging/sending
 const SLACK_TOKEN = 'Token';
+
+const DISCORD_ACTIVE = false;
+const DISCORD_URL = 'https://discord.com/api/webhooks/XXXXXXXXX/YYYYYYYYYYYY';
+
+function isSlackActive(): bool
+{
+	return SLACK_ACTIVE;
+}
 
 function getSlackUrl(): string
 {
@@ -27,4 +36,14 @@ function getSlackToken(): string
 function getSlackChannel(): string
 {
     return SLACK_CHANNEL;
+}
+
+function isDiscordActive(): bool
+{
+	return DISCORD_ACTIVE;
+}
+
+function getDiscordUrl(): string
+{
+	return DISCORD_URL;
 }
