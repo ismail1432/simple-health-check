@@ -10,8 +10,8 @@
 
 ## Requirements
 
-- PHP >= 7.1
-- Bash is available.
+- PHP >= 7.1 and the cURL extension is available.
+- Bash and cURL command are available.
 
 ### PHP
 
